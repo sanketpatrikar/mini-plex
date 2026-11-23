@@ -1,0 +1,132 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* Geist colors and type ramp: vercel.com/geist/colors and /geist/typography. */
+:root {
+  color-scheme: light dark;
+  --ds-background-100: hsl(0 0% 100%);
+  --ds-background-200: hsl(0 0% 98%);
+  --ds-gray-100: hsl(0 0% 95%);
+  --ds-gray-200: hsl(0 0% 92%);
+  --ds-gray-300: hsl(0 0% 90%);
+  --ds-gray-400: hsl(0 0% 92%);
+  --ds-gray-500: hsl(0 0% 79%);
+  --ds-gray-900: hsl(0 0% 30%);
+  --ds-gray-1000: hsl(0 0% 9%);
+  --ds-blue-700: hsl(212 100% 48%);
+  --ds-red-900: #d60020;
+  --ds-focus-color: var(--ds-blue-700);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ds-background-100: hsl(0 0% 4%);
+    --ds-background-200: hsl(0 0% 0%);
+    --ds-gray-100: hsl(0 0% 10%);
+    --ds-gray-200: hsl(0 0% 12%);
+    --ds-gray-300: hsl(0 0% 16%);
+    --ds-gray-400: hsl(0 0% 18%);
+    --ds-gray-500: hsl(0 0% 27%);
+    --ds-gray-900: hsl(0 0% 63%);
+    --ds-gray-1000: hsl(0 0% 93%);
+    --ds-blue-900: hsl(210 100% 66%);
+    --ds-red-900: #ff5e63;
+    --ds-focus-color: var(--ds-blue-900);
+  }
+}
+
+@theme inline {
+  --font-sans: "Geist Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --color-background: var(--ds-background-100);
+  --color-foreground: var(--ds-gray-1000);
+  --color-card: var(--ds-background-100);
+  --color-card-foreground: var(--ds-gray-1000);
+  --color-primary: var(--ds-gray-1000);
+  --color-primary-foreground: var(--ds-background-100);
+  --color-secondary: var(--ds-gray-200);
+  --color-secondary-foreground: var(--ds-gray-1000);
+  --color-muted: var(--ds-gray-100);
+  --color-muted-foreground: var(--ds-gray-900);
+  --color-accent: var(--ds-gray-100);
+  --color-accent-foreground: var(--ds-gray-1000);
+  --color-destructive: var(--ds-red-900);
+  --color-border: var(--ds-gray-400);
+  --color-input: var(--ds-gray-400);
+  --color-ring: var(--ds-focus-color);
+  --radius-md: 6px;
+  --radius-lg: 6px;
+}
+
+@layer base {
+  body { @apply bg-background text-foreground font-sans; }
+  :where(button, a, input):focus-visible { outline: 2px solid var(--ds-focus-color); outline-offset: 2px; }
+}
+
+.text-heading-40 { font-size: 2.5rem; line-height: 3rem; font-weight: 600; letter-spacing: -0.06em; }
+.text-heading-24 { font-size: 1.5rem; line-height: 2rem; font-weight: 600; letter-spacing: -0.04em; }
+.text-heading-20 { font-size: 1.25rem; line-height: 1.625rem; font-weight: 600; letter-spacing: -0.02em; }
+.text-copy-16 { font-size: 1rem; line-height: 1.5rem; }
+.text-copy-14 { font-size: 0.875rem; line-height: 1.25rem; }
+.material-base { border: 1px solid var(--ds-gray-400); border-radius: 6px; background: var(--ds-background-100); }
+
+.search-page { min-height: 100svh; display: flex; flex-direction: column; }
+.search-header { min-height: 4rem; border-bottom: 1px solid var(--ds-gray-400); }
+.search-header-content {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  width: min(100%, 75rem); min-height: inherit; margin-inline: auto; padding-inline: 1.5rem;
+}
+
+.search-main {
+  display: flex; flex: 1; flex-direction: column; width: min(100%, 46rem);
+  margin-inline: auto; padding-inline: 1.5rem;
+}
+
+.search-page-home .search-main { justify-content: center; gap: 1rem; padding-block: 2rem 4rem; }
+.search-intro { margin-bottom: 0.5rem; }
+.search-intro p { margin-top: 0.5rem; color: var(--ds-gray-900); }
+.search-form { display: flex; align-items: stretch; gap: 0.5rem; }
+.search-composer { min-width: 0; min-height: 2.5rem; border-radius: 6px; }
+.search-composer:hover { border-color: var(--ds-gray-500); }
+.search-composer [data-slot="input-group-control"] { height: auto; min-height: 2.375rem; }
+.search-composer input::-webkit-search-cancel-button { appearance: none; }
+.search-form .search-submit { height: auto; min-height: 2.5rem; border-radius: 6px; }
+.search-reset, .search-suggestion { border-radius: 6px; }
+.search-suggestions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.search-suggestion { height: auto; min-height: 2rem; max-width: 100%; white-space: normal; }
+
+.search-results { display: grid; gap: 1rem; padding-block: 2rem 1rem; }
+.search-query { overflow-wrap: anywhere; }
+.search-status { display: flex; align-items: center; gap: 0.5rem; color: var(--ds-gray-900); }
+.search-answer, .search-error { min-width: 0; padding: 1.5rem; }
+.search-answer { display: grid; gap: 1rem; }
+.search-answer-heading { display: flex; align-items: center; gap: 0.5rem; }
+.search-answer-copy { display: grid; gap: 0.75rem; overflow-wrap: anywhere; }
+.search-answer-copy :is(ol, ul) { padding-inline-start: 1.5rem; }
+.search-answer-copy ul { list-style: disc; }
+.search-answer-copy ol { list-style: decimal; }
+.search-answer-copy pre { overflow-x: auto; min-width: 0; border: 1px solid var(--ds-gray-400); border-radius: 6px; background: var(--ds-background-200); padding: 0.75rem; }
+.search-answer-copy :is(h1, h2, h3, h4, h5, h6) { font-weight: 600; }
+.search-citation { margin-inline: 0.125em; }
+.search-sources { border-top: 1px solid var(--ds-gray-400); padding-top: 0.5rem; }
+.search-source-trigger, .search-source-link { min-height: 2rem; align-items: center; }
+.search-source-link:hover { background: var(--ds-gray-100); }
+
+.search-dock {
+  position: sticky; z-index: 1; bottom: 0; margin-top: auto;
+  border-top: 1px solid var(--ds-gray-400); background: var(--ds-background-100);
+  padding-block: 0.75rem max(1rem, env(safe-area-inset-bottom));
+}
+
+@media (max-width: 40rem) {
+  .search-main, .search-header-content { padding-inline: 1rem; }
+  .search-answer, .search-error { padding: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-page *, .search-page *::before, .search-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
