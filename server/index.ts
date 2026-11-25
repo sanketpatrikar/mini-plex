@@ -32,16 +32,19 @@ async function search(query: string): Promise<SearchResult> {
     "Gemini",
     45_000,
   ).catch((error: unknown) => {
-    if (error instanceof SearchError && (error.status === 503 || error.status === 504)) return error
+    if (error instanceof SearchError && (error.status === 429 || error.status === 503 || error.status === 504)) return error
     throw error
   })
 
   if (reply instanceof SearchError) {
     const reason = reply.status === 504
       ? "Gemini took too long to write an answer."
-      : "Gemini is temporarily unavailable."
+      : reply.status === 429
+        ? "Gemini quota reached."
+        : "Gemini is temporarily unavailable."
+    const retry = reply.status === 429 ? "Try again later." : "Submit the search again to retry the answer."
     return {
-      answer: `${reason} The web sources are available below. Submit the search again to retry the answer.`,
+      answer: `${reason} The web sources are available below. ${retry}`,
       sources,
       sourcesOnly: true,
     }
